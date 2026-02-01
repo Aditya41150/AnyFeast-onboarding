@@ -80,11 +80,19 @@ flutter build apk --release
 ## 🎨 Key Features to Test
 
 ### Animations
+- [ ] Splash screen logo pulse animation
 - [ ] Splash screen fade and scale animation
+- [ ] Welcome screen floating hero icon
+- [ ] Welcome screen rotating sparkle
+- [ ] Welcome screen staggered value prop entrance
+- [ ] Animated button press effect
 - [ ] Page transitions (fade, slide)
 - [ ] Card selection animations
 - [ ] Progress indicator animations
-- [ ] Success checkmark animation
+- [ ] Completion screen success checkmark (elastic bounce)
+- [ ] Completion screen staggered content reveal
+
+**See `ANIMATIONS.md` for detailed animation documentation**
 
 ### Interactions
 - [ ] Swipe gestures on feature onboarding

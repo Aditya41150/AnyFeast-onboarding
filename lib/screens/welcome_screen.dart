@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'onboarding_flow.dart';
+import '../widgets/animations.dart';
+import '../widgets/animated_button.dart';
+
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -64,38 +67,45 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       children: [
                         const SizedBox(height: 40),
                         // Hero Image/Illustration
-                        Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                const Color(0xFF6C63FF).withOpacity(0.1),
-                                const Color(0xFFEC4899).withOpacity(0.1),
+                        FloatingAnimation(
+                          duration: const Duration(seconds: 3),
+                          offset: 15,
+                          child: Container(
+                            width: 200,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  const Color(0xFF6C63FF).withOpacity(0.1),
+                                  const Color(0xFFEC4899).withOpacity(0.1),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Icon(
+                                  Icons.restaurant,
+                                  size: 80,
+                                  color: const Color(0xFF6C63FF),
+                                ),
+                                Positioned(
+                                  right: 45,
+                                  top: 35,
+                                  child: RotatingAnimation(
+                                    duration: const Duration(seconds: 4),
+                                    child: Icon(
+                                      Icons.auto_awesome,
+                                      size: 32,
+                                      color: const Color(0xFFEC4899),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Icon(
-                                Icons.restaurant,
-                                size: 80,
-                                color: const Color(0xFF6C63FF),
-                              ),
-                              Positioned(
-                                right: 45,
-                                top: 35,
-                                child: Icon(
-                                  Icons.auto_awesome,
-                                  size: 32,
-                                  color: const Color(0xFFEC4899),
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                         const SizedBox(height: 40),
@@ -122,23 +132,62 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           ),
                         ),
                         const SizedBox(height: 32),
-                        // Value Props
-                        _buildValueProp(
-                          Icons.psychology,
-                          'AI-Powered Suggestions',
-                          'Personalized recipes based on your preferences',
+                        // Value Props with staggered animation
+                        TweenAnimationBuilder<double>(
+                          duration: const Duration(milliseconds: 600),
+                          tween: Tween(begin: 0.0, end: 1.0),
+                          curve: Curves.easeOut,
+                          builder: (context, value, child) {
+                            return Transform.translate(
+                              offset: Offset(0, 30 * (1 - value)),
+                              child: Opacity(
+                                opacity: value,
+                                child: _buildValueProp(
+                                  Icons.psychology,
+                                  'AI-Powered Suggestions',
+                                  'Personalized recipes based on your preferences',
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(height: 14),
-                        _buildValueProp(
-                          Icons.qr_code_scanner,
-                          'Smart Ingredient Scanner',
-                          'Scan what you have, discover what you can make',
+                        TweenAnimationBuilder<double>(
+                          duration: const Duration(milliseconds: 600),
+                          tween: Tween(begin: 0.0, end: 1.0),
+                          curve: Curves.easeOut,
+                          builder: (context, value, child) {
+                            return Transform.translate(
+                              offset: Offset(0, 30 * (1 - value)),
+                              child: Opacity(
+                                opacity: value,
+                                child: _buildValueProp(
+                                  Icons.qr_code_scanner,
+                                  'Smart Ingredient Scanner',
+                                  'Scan what you have, discover what you can make',
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(height: 14),
-                        _buildValueProp(
-                          Icons.eco,
-                          'Reduce Food Waste',
-                          'Make the most of every ingredient',
+                        TweenAnimationBuilder<double>(
+                          duration: const Duration(milliseconds: 600),
+                          tween: Tween(begin: 0.0, end: 1.0),
+                          curve: Curves.easeOut,
+                          builder: (context, value, child) {
+                            return Transform.translate(
+                              offset: Offset(0, 30 * (1 - value)),
+                              child: Opacity(
+                                opacity: value,
+                                child: _buildValueProp(
+                                  Icons.eco,
+                                  'Reduce Food Waste',
+                                  'Make the most of every ingredient',
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(height: 40),
                       ],
@@ -152,40 +201,23 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 32.0),
               child: Column(
                 children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    const OnboardingFlow(),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              return FadeTransition(
-                                  opacity: animation, child: child);
-                            },
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF6C63FF),
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                  AnimatedButton(
+                    text: 'Get Started',
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const OnboardingFlow(),
+                          transitionsBuilder: (context, animation,
+                              secondaryAnimation, child) {
+                            return FadeTransition(
+                                opacity: animation, child: child);
+                          },
                         ),
-                      ),
-                      child: const Text(
-                        'Get Started',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+                      );
+                    },
+                    icon: const Icon(Icons.arrow_forward, size: 20, color: Colors.white),
                   ),
                   const SizedBox(height: 12),
                   Text(

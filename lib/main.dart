@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/splash_screen.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() {
-  runApp(const AnyFeastApp());
+  runApp( DevicePreview(
+      enabled: true,
+      builder: (context) => const AnyFeastApp(),
+    ),);
 }
 
 class AnyFeastApp extends StatelessWidget {

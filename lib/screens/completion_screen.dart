@@ -92,112 +92,107 @@ class _CompletionScreenState extends State<CompletionScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           child: Column(
             children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Success Animation
-                    AnimatedBuilder(
-                      animation: _checkController,
-                      builder: (context, child) {
-                        return Transform.scale(
-                          scale: _scaleAnimation.value,
-                          child: Container(
-                            width: 120,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Color(0xFF6C63FF),
-                                  Color(0xFF8B5CF6),
-                                ],
-                              ),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFF6C63FF).withOpacity(0.4),
-                                  blurRadius: 30,
-                                  offset: const Offset(0, 15),
-                                ),
-                              ],
-                            ),
-                            child: Icon(
-                              Icons.check,
-                              size: 60 * _checkAnimation.value,
-                              color: Colors.white,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 40),
-                    // Title
-                    AnimatedOpacity(
-                      opacity: _showContent ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 600),
-                      child: const Text(
-                        'All Set!',
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF1A1A1A),
+              const SizedBox(height: 10),
+              // Success Animation
+              AnimatedBuilder(
+                animation: _checkController,
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: _scaleAnimation.value,
+                    child: Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFF6C63FF),
+                            Color(0xFF8B5CF6),
+                          ],
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    // Description
-                    AnimatedOpacity(
-                      opacity: _showContent ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 600),
-                      child: Text(
-                        'Your personalized meal planning\nexperience is ready!',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[600],
-                          height: 1.6,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 50),
-                    // Summary Cards
-                    AnimatedOpacity(
-                      opacity: _showContent ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 800),
-                      child: Column(
-                        children: [
-                          _buildSummaryCard(
-                            Icons.flag,
-                            'Goals',
-                            '${widget.selectedGoals.length} selected',
-                            const Color(0xFF6C63FF),
-                          ),
-                          const SizedBox(height: 12),
-                          _buildSummaryCard(
-                            Icons.restaurant,
-                            'Diet',
-                            _formatDietName(widget.selectedDiet),
-                            const Color(0xFF8B5CF6),
-                          ),
-                          const SizedBox(height: 12),
-                          _buildSummaryCard(
-                            Icons.public,
-                            'Cuisines',
-                            '${widget.selectedCuisines.length} cuisines',
-                            const Color(0xFFEC4899),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF6C63FF).withOpacity(0.3),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
                           ),
                         ],
                       ),
+                      child: Icon(
+                        Icons.check,
+                        size: 45 * _checkAnimation.value,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              // Title
+              AnimatedOpacity(
+                opacity: _showContent ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 600),
+                child: const Text(
+                  'All Set!',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1A1A1A),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Description
+              AnimatedOpacity(
+                opacity: _showContent ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 600),
+                child: Text(
+                  'Your personalized meal planning\nexperience is ready!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                    height: 1.4,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              // Summary Cards
+              AnimatedOpacity(
+                opacity: _showContent ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 800),
+                child: Column(
+                  children: [
+                    _buildSummaryCard(
+                      Icons.flag,
+                      'Goals',
+                      '${widget.selectedGoals.length} selected',
+                      const Color(0xFF6C63FF),
+                    ),
+                    const SizedBox(height: 8),
+                    _buildSummaryCard(
+                      Icons.restaurant,
+                      'Diet',
+                      _formatDietName(widget.selectedDiet),
+                      const Color(0xFF8B5CF6),
+                    ),
+                    const SizedBox(height: 8),
+                    _buildSummaryCard(
+                      Icons.public,
+                      'Cuisines',
+                      '${widget.selectedCuisines.length} cuisines',
+                      const Color(0xFFEC4899),
                     ),
                   ],
                 ),
               ),
+              const SizedBox(height: 24),
               // CTA Button
               AnimatedOpacity(
                 opacity: _showContent ? 1.0 : 0.0,
@@ -206,7 +201,7 @@ class _CompletionScreenState extends State<CompletionScreen>
                   children: [
                     SizedBox(
                       width: double.infinity,
-                      height: 56,
+                      height: 52,
                       child: ElevatedButton(
                         onPressed: _startJourney,
                         style: ElevatedButton.styleFrom(
@@ -223,25 +218,26 @@ class _CompletionScreenState extends State<CompletionScreen>
                             Text(
                               'Start Cooking',
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 17,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             SizedBox(width: 8),
-                            Icon(Icons.arrow_forward, size: 20),
+                            Icon(Icons.arrow_forward, size: 18),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 10),
                     Text(
                       'You can change these preferences anytime',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 12,
                         color: Colors.grey[500],
                       ),
                     ),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
